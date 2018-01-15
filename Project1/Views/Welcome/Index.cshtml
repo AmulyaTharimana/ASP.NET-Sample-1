@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Welcome";
+}
+<h2 style="color:white"> Preordering of Iphone now made easy! Enjoy!!!</h2>
+<h3 style="color:black"> Please choose from the below </h3>
+
+<style type="text/css";>
+    img 
+    {
+        width: 5%;
+    }
+    body 
+    {
+        background-color:darkgoldenrod;
+    }
+    
+    .button 
+    {
+        font-size: 12px;
+        font-weight: bold;
+        font-family: Arial;
+        color: darksalmon;
+        min-width: 54px;
+        height: 24px;
+        white-space: nowrap;
+        cursor: pointer;
+        outline: solid;
+        padding: inherit;
+        text-align: center;
+        border-radius: inherit;
+        background-color: azure;
+    }
+</style>
+<img src="~/Images/Icon.jpg" align="right"/>
+<img src="~/Images/Facetime.png" align="bottom"/>
+<input id="Button1" type="button" value="Customer" class="button" onclick="location.href='@Url.Action("About", "Customer", new {  choice ="Customer"})'" />
+<input id="Button2" type="button" value="Admin" class="button" onclick="location.href='@Url.Action("Index","Admin", new {  choice ="Admin"})'" />
+
+

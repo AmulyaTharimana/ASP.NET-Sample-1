@@ -1,0 +1,151 @@
+﻿@model Project1.Models.Class1
+@{
+    ViewBag.Title = "About";
+}
+
+<h2>List of Phones Available</h2>      
+@using (Html.BeginForm())
+{ 
+<script type="text/javascript">
+    //Logic for requirement 1: Adding the values of selected phones and an exception to chose only 6 phones
+    function copytext()
+    {
+        val1 = document.getElementById("Text1");
+        val2 = document.getElementById("Text2");
+        val3 = document.getElementById("Text3");
+        document.getElementById("Phone").value = +val1.value + +val2.value + +val3.value;
+        document.getElementById("Price").value = (+val1.value) * 800 + (+val2.value) * 1100 + (+val3.value) * 2100;
+        if (document.getElementById("Phone").value > 6) {
+            alert("Please Select less than or equal to 6 phones.");
+            document.getElementById("Text1").value = 0;
+            document.getElementById("Text2").value = 0;
+            document.getElementById("Text3").value = 0;
+            document.getElementById("Phone").value = 0;
+            document.getElementById("Price").value = 0;
+            }
+    }
+    //Atleast one phone must be selected
+    function ViewConfirmation()
+    {
+        if (document.getElementById("Price").value == "0") {
+            alert("Please Select Phone");
+    }
+        else {
+            var x = document.getElementById("Confirmation");
+            x.style.display = "block";
+            }
+    }
+    function Final()
+    {
+        var Name = document.getElementById("Name");
+        //Customer details
+        if (Name.value.length < 1)
+        {
+            alert("Please Enter Name");
+            document.getElementById("Name").value = "";
+        }
+        //Logic for "If selected more than 1 Glass Phone, the user will be charged 100$ extra"
+        else {
+            if (document.getElementById("Text3").value > 1)
+            {
+                var total = document.getElementById("Price").value;
+                document.getElementById("Price").value = +total + 100;
+                alert("$100 extra for shipping of Iphone GOLD")
+            }
+            //Logic for 10% discount on total if customer choses more than 3 phones
+            if (document.getElementById("Phone").value > 3)
+            {
+                var newprice = document.getElementById("Price").value;
+                var discountprice = +newprice * 0.9;
+                document.getElementById("Price").value = discountprice;
+                alert("New Price is $" + discountprice);
+            }
+            alert("THANKS FOR THE ORDER");
+            //Saving the details in the FinalOrder
+            var url = "@Url.Action("FinalOrder", "Customer")";
+                var model = {
+                    Name: document.getElementById("Name").value,
+                    MiniPhone: document.getElementById("Text1").value,
+                    XLPhone: document.getElementById("Text2").value,
+                    GlassPhone: document.getElementById("Text3").value,
+                    TotalPrice: document.getElementById("Price").value
+                };
+
+                $.post(url, model, function (res) {
+                    //res contains the markup returned by the partial view
+                    //You probably want to set that to some Div.
+                    $("#SomeDivToShowTheResult").html(res);
+                });
+                alert("YOUR ORDER IS ON THE WAY");
+        }
+    }
+    //Creating HTML tables and buttons.
+</script> 
+@Html.AntiForgeryToken()
+<fieldset>
+    <table style="width:100%">
+        <caption> Select your model</caption>
+        <tr>
+            <th> Model</th>
+            <th> Price</th>
+            <th> Quantity</th>
+        </tr>
+        <tr>
+            <td> Mini</td>
+            <td> 800$</td>
+            <td> <input id="Text1" type="number" min="0" max="6" onchange="copytext()" /></td>
+        </tr>
+        <tr>
+            <td> XL</td>
+            <td> 1100$</td>
+            <td> <input id="Text2" type="number" min="0" max="6" onchange="copytext()" /></td>
+        </tr>
+        <tr>
+            <td> Glass</td>
+            <td> 2100$</td>
+            <td> <input id="Text3" type="number" min="0" max="6" onchange="copytext()" /></td>
+        </tr>
+    </table>
+    <div style="float:right;">
+        <table align="center">
+            <tr>
+                <td>Total Phones</td>
+                <td></td>
+                <td><input id="Phone" type="number" /></td>
+            </tr>
+            <tr>
+                <td>Total Price</td>
+                <td></td>
+                <td> <input id="Price" type="number" /></td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="button1" value="Proceed" type="button" onclick="ViewConfirmation()" />
+                </td>
+            </tr>
+        </table>
+        <table id="Confirmation" align="center">
+            <tr>
+                <td>Enter your name:</td>
+                <td><input id="Name" type="text" /></td>
+            </tr>
+            <tr>
+                <td><input id="Submit1" type="submit" value="submit" onclick="Final()" /></td>
+            </tr>
+
+        </table>
+    </div>
+</fieldset>
+}
+
+
+
+
+
+
+
+
+
+
+
+

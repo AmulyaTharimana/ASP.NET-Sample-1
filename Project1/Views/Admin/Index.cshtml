@@ -1,0 +1,27 @@
+﻿
+@model IList < Project1.Models.Class1>
+@{
+    ViewBag.Title = "WELCOME ADMIN!";
+}
+<h2 style="color:blue">@ViewBag.Title.</h2>
+<h3 style="color:blue">@ViewBag.Message</h3>
+<table>
+    <tr>
+        <th>Name</th> 
+        <th> &nbsp; &nbsp; MiniPhone</th> 
+        <th> &nbsp; &nbsp; XLPhone</th> 
+        <th> &nbsp; &nbsp; GlassPhone</th> 
+        <th> &nbsp; &nbsp; TotalPrice</th> 
+    </tr>
+    @foreach (var obj in Model)
+    {
+        <tr>d>
+            <td>@obj.Name</td>
+            <td> &nbsp; &nbsp; @obj.MiniPhone</td>
+            <td> &nbsp; &nbsp; @obj.XLPhone</td>
+            <td> &nbsp; &nbsp; @obj.GlassPhone</td>
+            <td> &nbsp; &nbsp; @obj.TotalPrice</td>
+        </tr>
+    }
+</table>
+
